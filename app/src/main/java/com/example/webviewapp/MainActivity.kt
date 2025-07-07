@@ -5,6 +5,8 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : androidx.activity.ComponentActivity() {
 
@@ -14,6 +16,11 @@ class MainActivity : androidx.activity.ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.webview)){ v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left,systemBars.top,systemBars.right,systemBars.bottom)
+            insets
+        }
         webView = findViewById(R.id.webview)
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = WebViewClient()
